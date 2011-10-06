@@ -5,7 +5,9 @@ and [jasmine](http://pivotal.github.com/jasmine/).
 
 ## Installation
 
-Download jquery-tabs.min.js or jquery-tabs.js and put into your's scripts.
+Download [jquery-tabs.min.js](https://github.com/jandudulski/Simple-jQuery-Tabs/blob/master/public/javascripts/jquery-tabs.min.js)
+or [jquery-tabs.js](https://github.com/jandudulski/Simple-jQuery-Tabs/blob/master/public/javascripts/jquery-tabs.js)
+and put into your's scripts.
 
 To enable plugin your tabs list elements needs `data-target` attribute with
 id of target panel, eg.:
