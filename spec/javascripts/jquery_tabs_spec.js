@@ -71,6 +71,15 @@ describe("jQuery Tabs", function() {
     it_behaves_like("any clicked tab");
   });
 
+  describe("2nd tab", function() {
+    beforeEach(function() {
+      $tab = $tabs.eq(1);
+      $panel = $('#' + $tab.attr('data-panel'));
+    });
+
+    it_behaves_like("any clicked tab");
+  });
+
   describe("Last tab", function() {
     beforeEach(function() {
       $tab = $tabs.eq(3);
