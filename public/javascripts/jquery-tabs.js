@@ -57,19 +57,21 @@
       this.bindTabs();
     }
     Tabs.prototype.register = function($tabs) {
-      return $tabs.each(__bind(function(index, element) {
+      var $container;
+      $container = this.element;
+      return $tabs.each(function(index, element) {
         var tab;
         tab = new Tab($(element));
-        return tab.listen(this.element);
-      }, this));
+        return tab.listen($container);
+      });
     };
     Tabs.prototype.bindTabs = function() {
-      return this.element.delegate("a", "click", __bind(function(event) {
+      return this.element.delegate("a", "click", function(event) {
         var $this;
         $this = $(event.currentTarget);
         $this.trigger("tab:activate", $this.parent());
         return false;
-      }, this));
+      });
     };
     return Tabs;
   })();

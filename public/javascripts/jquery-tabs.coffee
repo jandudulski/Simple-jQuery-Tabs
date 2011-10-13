@@ -39,12 +39,13 @@ class Tabs
     @bindTabs()
 
   register: ($tabs) ->
-    $tabs.each (index, element) =>
+    $container = @element
+    $tabs.each (index, element) ->
       tab = new Tab($(element))
-      tab.listen(@element)
+      tab.listen($container)
 
   bindTabs: ->
-    @element.delegate "a", "click", (event) =>
+    @element.delegate "a", "click", (event) ->
       $this = $(event.currentTarget)
       $this.trigger "tab:activate", $this.parent()
       # prevent page reloading
