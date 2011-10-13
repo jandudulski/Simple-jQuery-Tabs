@@ -46,11 +46,14 @@ class Tabs
       tab.listen($container)
 
   bindTabs: ->
-    @element.delegate "a", "click", (event) ->
-      $this = $(event.currentTarget)
-      $this.trigger "tab:activate", $this.parent()
-      # prevent page reloading
-      return false
+    @element.delegate "a", "click", bind
+    @element.delegate "a", "focus", bind
+
+  bind = (event) ->
+    $this = $(event.currentTarget)
+    $this.trigger "tab:activate", $this.parent()
+    # prevent page reloading
+    return false
 
 $.fn.tabs = ->
   @each ->

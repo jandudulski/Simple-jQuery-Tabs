@@ -72,6 +72,59 @@ describe("jQuery Tabs", function() {
     });
   });
 
+  shared_examples_for("any focused tab", function() {
+    it("triggers tab:activate event", function() {
+      spyOnEvent($container, "tab:activate");
+
+      $tab.find("a").focus();
+
+      expect("tab:activate").toHaveBeenTriggeredOn($container);
+    });
+
+    // event.result == undefined for me, should be false
+    xit("don't reload the page", function() {
+      $tab.bind("click", function(event) {
+        expect(event.result).toEqual(false);
+      });
+
+      $tab.find("a").focus();
+    });
+
+    it("introduce itself", function() {
+      $container.bind("tab:activate", function(event, activator) {
+        expect($(activator)).toBe($tab);
+      });
+
+      $tab.find("a").focus();
+    });
+
+    it("opens relative panel", function() {
+      $tab.find("a").focus();
+
+      expect($panel).not.toBeHidden();
+    });
+
+    it("keep only one panel open", function() {
+      $tab.find("a").focus();
+
+      $("#panel-1, #panel-2, #panel-3, #panel-4").not($panel).each(function(index, panel) {
+        expect($(panel)).toBeHidden();
+      });
+    });
+
+    it("marks tab as an active", function() {
+      $tab.find("a").focus();
+
+      expect($tab).toHaveClass("active");
+    });
+
+    it("keeps only one tab as active", function() {
+      $tab.find("a").focus();
+
+      expect($tabs.filter(".active").length).toEqual(1);
+    });
+  });
+
   describe("1st tab", function() {
     beforeEach(function() {
       $tab = $tabs.eq(0);
@@ -79,6 +132,7 @@ describe("jQuery Tabs", function() {
     });
 
     it_behaves_like("any clicked tab");
+    it_behaves_like("any focused tab");
   });
 
   describe("2nd tab", function() {
@@ -88,6 +142,7 @@ describe("jQuery Tabs", function() {
     });
 
     it_behaves_like("any clicked tab");
+    it_behaves_like("any focused tab");
   });
 
   describe("Last tab", function() {
@@ -97,5 +152,6 @@ describe("jQuery Tabs", function() {
     });
 
     it_behaves_like("any clicked tab");
+    it_behaves_like("any focused tab");
   });
 });

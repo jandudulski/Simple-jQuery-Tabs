@@ -52,6 +52,7 @@
     return Tab;
   })();
   Tabs = (function() {
+    var bind;
     function Tabs(element) {
       this.element = element;
       this.register(this.element.find("li"));
@@ -67,12 +68,14 @@
       });
     };
     Tabs.prototype.bindTabs = function() {
-      return this.element.delegate("a", "click", function(event) {
-        var $this;
-        $this = $(event.currentTarget);
-        $this.trigger("tab:activate", $this.parent());
-        return false;
-      });
+      this.element.delegate("a", "click", bind);
+      return this.element.delegate("a", "focus", bind);
+    };
+    bind = function(event) {
+      var $this;
+      $this = $(event.currentTarget);
+      $this.trigger("tab:activate", $this.parent());
+      return false;
     };
     return Tabs;
   })();
