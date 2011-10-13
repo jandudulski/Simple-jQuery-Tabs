@@ -37,7 +37,7 @@ class Tab
 class Tabs
   constructor: (@element) ->
     @register(@element.find("li"))
-    @bindTabs()
+    @bindEvents ["click", "focus"]
 
   register: ($tabs) ->
     $container = @element
@@ -45,15 +45,15 @@ class Tabs
       tab = new Tab($(element))
       tab.listen($container)
 
-  bindTabs: ->
-    @element.delegate "a", "click", bind
-    @element.delegate "a", "focus", bind
+  bindEvents: (events) ->
+    @bind event for event in events
 
-  bind = (event) ->
-    $this = $(event.currentTarget)
-    $this.trigger "tab:activate", $this.parent()
-    # prevent page reloading
-    return false
+  bind: (event_name) ->
+    @element.delegate "a", event_name, (event_object) ->
+      $this = $(event_object.currentTarget)
+      $this.trigger "tab:activate", $this.parent()
+      # prevent page reloading
+      return false
 
 $.fn.tabs = ->
   @each ->

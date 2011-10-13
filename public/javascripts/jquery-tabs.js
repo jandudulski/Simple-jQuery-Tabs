@@ -52,11 +52,10 @@
     return Tab;
   })();
   Tabs = (function() {
-    var bind;
     function Tabs(element) {
       this.element = element;
       this.register(this.element.find("li"));
-      this.bindTabs();
+      this.bindEvents(["click", "focus"]);
     }
     Tabs.prototype.register = function($tabs) {
       var $container;
@@ -67,15 +66,22 @@
         return tab.listen($container);
       });
     };
-    Tabs.prototype.bindTabs = function() {
-      this.element.delegate("a", "click", bind);
-      return this.element.delegate("a", "focus", bind);
+    Tabs.prototype.bindEvents = function(events) {
+      var event, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = events.length; _i < _len; _i++) {
+        event = events[_i];
+        _results.push(this.bind(event));
+      }
+      return _results;
     };
-    bind = function(event) {
-      var $this;
-      $this = $(event.currentTarget);
-      $this.trigger("tab:activate", $this.parent());
-      return false;
+    Tabs.prototype.bind = function(event_name) {
+      return this.element.delegate("a", event_name, function(event_object) {
+        var $this;
+        $this = $(event_object.currentTarget);
+        $this.trigger("tab:activate", $this.parent());
+        return false;
+      });
     };
     return Tabs;
   })();
