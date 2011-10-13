@@ -52,11 +52,11 @@ describe("jQuery Tabs", function() {
     });
 
     it("keep only one panel open", function() {
-      var panels = $("#panel-1, #panel-2, #panel-3, #panel-4").not($panel);
-
       $tab.find("a").click();
 
-      expect($panels).toBeHidden();
+      $("#panel-1, #panel-2, #panel-3, #panel-4").not($panel).each(function(index, panel) {
+        expect($(panel)).toBeHidden();
+      });
     });
 
     it("marks tab as an active", function() {
