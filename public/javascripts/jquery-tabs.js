@@ -16,6 +16,7 @@
       return this.element.show();
     };
     Panel.prototype.close = function() {
+      console.log("close called");
       return this.element.hide();
     };
     return Panel;
@@ -46,7 +47,8 @@
       return this.panel.open();
     };
     Tab.prototype.deactivate = function() {
-      return this.element.removeClass("active");
+      this.element.removeClass("active");
+      return this.panel.close();
     };
     return Tab;
   })();

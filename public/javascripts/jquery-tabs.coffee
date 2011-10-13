@@ -9,6 +9,7 @@ class Panel
     @element.show()
 
   close: ->
+    console.log("close called")
     @element.hide()
 
 class Tab
@@ -32,6 +33,7 @@ class Tab
 
   deactivate: ->
     @element.removeClass "active"
+    @panel.close()
 
 class Tabs
   constructor: (@element) ->

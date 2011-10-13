@@ -11,6 +11,14 @@ describe("jQuery Tabs", function() {
     expect($tabs.length).toBeGreaterThan(0);
   });
 
+  it("has 1st tab opened on load", function() {
+    expect($("#panel-1")).not.toBeHidden();
+  });
+
+  it("has 2nd, 3rd and last panel closed on load", function() {
+    expect($("#panel-2, #panel-3, #panel-4")).toBeHidden();
+  });
+
   shared_examples_for("any clicked tab", function() {
     it("triggers tab:activate event", function() {
       spyOnEvent($container, "tab:activate");
@@ -44,9 +52,11 @@ describe("jQuery Tabs", function() {
     });
 
     it("keep only one panel open", function() {
+      var panels = $("#panel-1, #panel-2, #panel-3, #panel-4").not($panel);
+
       $tab.find("a").click();
 
-      expect($("#panel-1, #panel-2, #panel-3, #panel-4").not($panel)).toBeHidden();
+      expect($panels).toBeHidden();
     });
 
     it("marks tab as an active", function() {
