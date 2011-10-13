@@ -9,7 +9,6 @@ class Panel
     @element.show()
 
   close: ->
-    console.log("close called")
     @element.hide()
 
 class Tab

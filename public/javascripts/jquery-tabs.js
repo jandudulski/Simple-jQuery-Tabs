@@ -16,7 +16,6 @@
       return this.element.show();
     };
     Panel.prototype.close = function() {
-      console.log("close called");
       return this.element.hide();
     };
     return Panel;
