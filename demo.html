@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>jQuery Simple Tabs Demo</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <ul class="tabs">
+                <li data-panel="panel-1" class="active"><a href="index.html">Tab 1</a></li>
+                <li data-panel="panel-2"><a href="index.html">Tab 2</a></li>
+                <li data-panel="panel-3"><a href="index.html">Tab 3</a></li>
+                <li data-panel="panel-4"><a href="index.html">Tab 4</a></li>
+            </ul>
+            <div id="panel-1">Panel 1</div>
+            <div id="panel-2">Panel 2</div>
+            <div id="panel-3">Panel 3</div>
+            <div id="panel-4">Panel 4</div>
+        </div>
+        <script src="public/javascripts/jquery.js"></script>
+        <script src="public/javascripts/jquery-tabs.min.js"></script>
+        <script>
+            (function () {
+                $(".tabs").tabs();
+            }());
+        </script>
+    </body>
+</html>
