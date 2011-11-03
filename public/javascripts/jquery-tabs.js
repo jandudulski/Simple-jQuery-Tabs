@@ -78,9 +78,9 @@
     Tabs.prototype.bind = function(event_name) {
       return this.element.delegate("a", event_name, function(event_object) {
         var $this;
+        event_object.preventDefault();
         $this = $(event_object.currentTarget);
-        $this.trigger("tab:activate", $this.parent());
-        return false;
+        return $this.trigger("tab:activate", $this.parent());
       });
     };
     return Tabs;

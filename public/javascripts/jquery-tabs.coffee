@@ -50,10 +50,9 @@ class Tabs
 
   bind: (event_name) ->
     @element.delegate "a", event_name, (event_object) ->
+      event_object.preventDefault()
       $this = $(event_object.currentTarget)
       $this.trigger "tab:activate", $this.parent()
-      # prevent page reloading
-      return false
 
 $.fn.tabs = ->
   @each ->
