@@ -2,8 +2,7 @@
 $ = jQuery
 
 class Panel
-  constructor: (@element, open = false) ->
-    @close() unless open
+  constructor: (@element, @remote = false) ->
 
   open: ->
     @element.show()
@@ -11,22 +10,27 @@ class Panel
   close: ->
     @element.hide()
 
+  load: (source) ->
+    @element.load source
+
 class Tab
   constructor: (@element) ->
     $panel = $("##{@element.attr('data-panel')}")
-    @panel = new Panel($panel, @isActive())
+    @panel = new Panel($panel, @element.data("remote"))
+    @panel.close() unless @isActive()
 
   listen: ($tabs) ->
-    $tabs.bind "tab:activate", (event, activator) =>
+    $tabs.bind "tab:activate", (event, activator, source) =>
       if @element.is(activator)
-        @activate() unless @isActive()
+        @activate(source) unless @isActive()
       else
         @deactivate()
 
   isActive: ->
     @element.hasClass "active"
 
-  activate: ->
+  activate: (source) ->
+    @panel.load source if @panel.remote
     @element.addClass "active"
     @panel.open()
 
@@ -52,7 +56,7 @@ class Tabs
     @element.delegate "a", event_name, (event_object) ->
       event_object.preventDefault()
       $this = $(event_object.currentTarget)
-      $this.trigger "tab:activate", $this.parent()
+      $this.trigger "tab:activate", [$this.parent(), $this.attr("href")]
 
 $.fn.tabs = ->
   @each ->

@@ -30,8 +30,16 @@ describe("jQuery Tabs", function() {
 
     // event.result == undefined for me, should be false
     xit("don't reload the page", function() {
+      var event;
+
       $tab.bind("click", function(event) {
-        expect(event.result).toEqual(false);
+        spyOn(event, "preventDefault");
+      });
+
+      $tab.find("a").click();
+
+      $tab.bind("click", function(event) {
+        expect(event.preventDefault).toHaveBeenCalled();
       });
 
       $tab.find("a").click();

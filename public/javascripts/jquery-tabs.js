@@ -3,20 +3,18 @@
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $ = jQuery;
   Panel = (function() {
-    function Panel(element, open) {
+    function Panel(element, remote) {
       this.element = element;
-      if (open == null) {
-        open = false;
-      }
-      if (!open) {
-        this.close();
-      }
+      this.remote = remote != null ? remote : false;
     }
     Panel.prototype.open = function() {
       return this.element.show();
     };
     Panel.prototype.close = function() {
       return this.element.hide();
+    };
+    Panel.prototype.load = function(source) {
+      return this.element.load(source);
     };
     return Panel;
   })();
@@ -25,13 +23,16 @@
       var $panel;
       this.element = element;
       $panel = $("#" + (this.element.attr('data-panel')));
-      this.panel = new Panel($panel, this.isActive());
+      this.panel = new Panel($panel, this.element.data("remote"));
+      if (!this.isActive()) {
+        this.panel.close();
+      }
     }
     Tab.prototype.listen = function($tabs) {
-      return $tabs.bind("tab:activate", __bind(function(event, activator) {
+      return $tabs.bind("tab:activate", __bind(function(event, activator, source) {
         if (this.element.is(activator)) {
           if (!this.isActive()) {
-            return this.activate();
+            return this.activate(source);
           }
         } else {
           return this.deactivate();
@@ -41,7 +42,10 @@
     Tab.prototype.isActive = function() {
       return this.element.hasClass("active");
     };
-    Tab.prototype.activate = function() {
+    Tab.prototype.activate = function(source) {
+      if (this.panel.remote) {
+        this.panel.load(source);
+      }
       this.element.addClass("active");
       return this.panel.open();
     };
@@ -80,7 +84,7 @@
         var $this;
         event_object.preventDefault();
         $this = $(event_object.currentTarget);
-        return $this.trigger("tab:activate", $this.parent());
+        return $this.trigger("tab:activate", [$this.parent(), $this.attr("href")]);
       });
     };
     return Tabs;
