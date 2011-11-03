@@ -3,9 +3,9 @@
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $ = jQuery;
   Panel = (function() {
-    function Panel(element, remote) {
+    function Panel(element, has_content) {
       this.element = element;
-      this.remote = remote != null ? remote : false;
+      this.has_content = has_content != null ? has_content : true;
     }
     Panel.prototype.open = function() {
       return this.element.show();
@@ -14,7 +14,8 @@
       return this.element.hide();
     };
     Panel.prototype.load = function(source) {
-      return this.element.load(source);
+      this.element.load(source);
+      return this.has_content = true;
     };
     return Panel;
   })();
@@ -23,7 +24,7 @@
       var $panel;
       this.element = element;
       $panel = $("#" + (this.element.attr('data-panel')));
-      this.panel = new Panel($panel, this.element.data("remote"));
+      this.panel = new Panel($panel, !this.element.data("remote"));
       if (!this.isActive()) {
         this.panel.close();
       }
@@ -43,7 +44,7 @@
       return this.element.hasClass("active");
     };
     Tab.prototype.activate = function(source) {
-      if (this.panel.remote) {
+      if (!this.panel.has_content) {
         this.panel.load(source);
       }
       this.element.addClass("active");

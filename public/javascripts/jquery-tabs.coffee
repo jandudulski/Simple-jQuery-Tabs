@@ -2,7 +2,7 @@
 $ = jQuery
 
 class Panel
-  constructor: (@element, @remote = false) ->
+  constructor: (@element, @has_content = true) ->
 
   open: ->
     @element.show()
@@ -12,11 +12,12 @@ class Panel
 
   load: (source) ->
     @element.load source
+    @has_content = true
 
 class Tab
   constructor: (@element) ->
     $panel = $("##{@element.attr('data-panel')}")
-    @panel = new Panel($panel, @element.data("remote"))
+    @panel = new Panel($panel, not @element.data("remote"))
     @panel.close() unless @isActive()
 
   listen: ($tabs) ->
@@ -30,7 +31,7 @@ class Tab
     @element.hasClass "active"
 
   activate: (source) ->
-    @panel.load source if @panel.remote
+    @panel.load source unless @panel.has_content
     @element.addClass "active"
     @panel.open()
 
