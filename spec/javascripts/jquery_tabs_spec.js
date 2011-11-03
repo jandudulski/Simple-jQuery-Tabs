@@ -81,15 +81,6 @@ describe("jQuery Tabs", function() {
       expect("tab:activate").toHaveBeenTriggeredOn($container);
     });
 
-    // event.result == undefined for me, should be false
-    xit("don't reload the page", function() {
-      $tab.bind("click", function(event) {
-        expect(event.result).toEqual(false);
-      });
-
-      $tab.find("a").focus();
-    });
-
     it("introduce itself", function() {
       $container.bind("tab:activate", function(event, activator) {
         expect($(activator)).toBe($tab);
