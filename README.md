@@ -23,6 +23,9 @@ id of target panel, eg.:
 
 Then add on document load `$(".tabs").tabs()` and... that's all!
 
+When you want to load panel content via ajax, set `data-remote="true"`
+attribute on the specific tab. Plugin will use anchor url to load the content.
+
 ## Requirements
 
 [jQuery 1.6](http://jquery.com/) or newer
