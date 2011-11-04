@@ -18,7 +18,11 @@ class Tab
   constructor: (@element) ->
     $panel = $("##{@element.attr('data-panel')}")
     @panel = new Panel($panel, not @element.data("remote"))
-    @panel.close() unless @isActive()
+
+    if @isActive()
+      @panel.load @element.find("a").attr("href") unless @panel.has_content
+    else
+      @panel.close()
 
   listen: ($tabs) ->
     $tabs.bind "tab:activate", (event, activator, source) =>

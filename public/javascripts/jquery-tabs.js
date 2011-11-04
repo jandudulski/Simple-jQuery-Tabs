@@ -25,7 +25,11 @@
       this.element = element;
       $panel = $("#" + (this.element.attr('data-panel')));
       this.panel = new Panel($panel, !this.element.data("remote"));
-      if (!this.isActive()) {
+      if (this.isActive()) {
+        if (!this.panel.has_content) {
+          this.panel.load(this.element.find("a").attr("href"));
+        }
+      } else {
         this.panel.close();
       }
     }
