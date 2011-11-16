@@ -14,7 +14,13 @@
       return this.element.hide();
     };
     Panel.prototype.load = function(source) {
-      this.element.load(source);
+      $.ajax(source, {
+        'dataType': 'html',
+        'type': 'GET',
+        'context': this.element
+      }).done(function(result) {
+        return this.html(result);
+      });
       return this.has_content = true;
     };
     return Panel;

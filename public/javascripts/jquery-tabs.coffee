@@ -11,7 +11,14 @@ class Panel
     @element.hide()
 
   load: (source) ->
-    @element.load source
+    $.ajax(source, {
+      'dataType': 'html',
+      'type': 'GET',
+      'context': @element
+    }).done((result) ->
+      @html(result)
+    )
+
     @has_content = true
 
 class Tab
