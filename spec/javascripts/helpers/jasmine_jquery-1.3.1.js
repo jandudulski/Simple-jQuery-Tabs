@@ -134,11 +134,15 @@ jasmine.JQuery.matchersClass = {};
         data.spiedEvents[[selector, eventName]] = e;
       };
       jQuery(selector).bind(eventName, handler);
-      data.handlers.push(handler);
+      //data.handlers.push(handler);
     },
 
     wasTriggered: function(selector, eventName) {
       return !!(data.spiedEvents[[selector, eventName]]);
+    },
+
+    wasPrevented: function(selector, eventName) {
+      return data.spiedEvents[[selector, eventName]].isDefaultPrevented();
     },
 
     cleanUp: function() {
@@ -279,7 +283,18 @@ beforeEach(function() {
       };
       return jasmine.JQuery.events.wasTriggered(selector, this.actual);
     }
-  })
+  });
+  this.addMatchers({
+    toHaveBeenPreventedOn: function(selector) {
+      this.message = function() {
+        return [
+          "Expected event " + this.actual + " to have been prevented on" + selector,
+          "Expected event " + this.actual + " not to have been prevented on " + selector
+        ];
+      };
+      return jasmine.JQuery.events.wasPrevented(selector, this.actual);
+    }
+  });
 });
 
 afterEach(function() {

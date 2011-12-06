@@ -28,21 +28,11 @@ describe("jQuery Tabs", function() {
       expect("tab:activate").toHaveBeenTriggeredOn($container);
     });
 
-    // event.result == undefined for me, should be false
-    xit("don't reload the page", function() {
-      var event;
-
-      $tab.bind("click", function(event) {
-        spyOn(event, "preventDefault");
-      });
-
+    it("don't reload the page", function() {
+      spyOnEvent($tab.find("a"), "click");
       $tab.find("a").click();
 
-      $tab.bind("click", function(event) {
-        expect(event.preventDefault).toHaveBeenCalled();
-      });
-
-      $tab.find("a").click();
+      expect("click").toHaveBeenPreventedOn($tab.find("a"));
     });
 
     it("introduce itself", function() {
