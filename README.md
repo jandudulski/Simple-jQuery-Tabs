@@ -1,7 +1,7 @@
 # Simple jQuery Tabs
 
 This is very simple jQuery tabs plugin made mostly when learning [coffee-script](http://jashkenas.github.com/coffee-script/)
-and [jasmine](http://pivotal.github.com/jasmine/).
+and [jasmine](https://jasmine.github.io/).
 
 ## Installation
 
